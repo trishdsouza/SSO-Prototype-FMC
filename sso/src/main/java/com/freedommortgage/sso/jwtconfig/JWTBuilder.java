@@ -2,16 +2,22 @@ package com.freedommortgage.sso.jwtconfig;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Service;
+import io.jsonwebtoken.impl.crypto.RsaProvider;
 
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.time.LocalDate;
 
-@Service
 public class JWTBuilder {
     
-    private String signingKey="Temporary_Key";
+    private static String signingKey="Temporary_Key";
+
+    static KeyPair kp = RsaProvider.generateKeyPair();
+    private static PublicKey publicKey = kp.getPublic();
+    private static PrivateKey privateKey = kp.getPrivate();
     
-    public String generateJWT() {
+    public static String generateJWT() {
         String token = Jwts.builder()
                 .setIssuer("OAuth Server")
                 .setAudience("www.example.com")
@@ -21,7 +27,7 @@ public class JWTBuilder {
                 .claim("idp","http://localhost:8082/ui")
                 .claim("acr","https://auth.conformx.com/.well-known/openid-configuration")
                 .claim("azp", "http://localhost:8083/ui2")
-                .signWith(SignatureAlgorithm.RS256,signingKey)
+                .signWith(SignatureAlgorithm.RS256,privateKey)
                 .compact();
         return token;
     }
