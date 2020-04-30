@@ -2,29 +2,27 @@ package com.freedommortgage.sso.controller;
 
 import com.freedommortgage.sso.jwtconfig.JWTBuilder;
 import com.freedommortgage.sso.model.JWTRequestObj;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class JWTController {
     
-    @Autowired
-    private JWTRequestObj jro;
-    @Autowired
     private JWTBuilder jwtBuilder;
 
-    @Autowired
-    public JWTController(JWTRequestObj jro, JWTBuilder jwtBuilder) {
-        this.jro = jro;
-        this.jwtBuilder = jwtBuilder;
+    @RequestMapping(value = "/token", method = RequestMethod.POST,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public String postToken(JWTRequestObj jro) {
+
+        String token = jwtBuilder.generateJWT();
+        return token;
     }
 
-    @RequestMapping(value = "/token", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    public JWTRequestObj postToken(@RequestBody JWTRequestObj jwt) {
-        jro.setAssertion(jwtBuilder.generateJWT());
-        return jro;
+    @GetMapping("/token/success")
+    public ResponseEntity<String> getSuccess() {
+        return new ResponseEntity<String>(jwtBuilder.generateJWT(), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
