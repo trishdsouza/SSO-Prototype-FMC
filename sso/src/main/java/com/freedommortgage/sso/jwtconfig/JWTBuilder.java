@@ -11,11 +11,14 @@ import java.time.LocalDate;
 
 public class JWTBuilder {
     
-    private static String signingKey="Temporary_Key";
+//    private static String signingKey="Temporary_Key";
 
     static KeyPair kp = RsaProvider.generateKeyPair();
     private static PublicKey publicKey = kp.getPublic();
     private static PrivateKey privateKey = kp.getPrivate();
+
+//    Key privateKey = loadPrivateKey(new FileInputStream("./keys/private_key.pem"));
+//    Key publicKey = loadPublicKey(new FileInputStream("./keys/public_key.pem"));
     
     public static String generateJWT() {
         String token = Jwts.builder()
