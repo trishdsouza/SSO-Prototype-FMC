@@ -1,6 +1,7 @@
 package com.freedommortgage.sso.jwtImpl;
 
 import com.freedommortgage.sso.jwtconfig.JWTBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ public class JWTImpl {
 
     private String scope2;
 
+    @Autowired
     private JWTBuilder jwtBuilder;
 
     private List<String> scopes = new ArrayList<>();
