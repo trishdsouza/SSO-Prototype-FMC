@@ -17,7 +17,7 @@ public class JWTController {
     @Autowired
     JWTImpl jwtImpl;
 
-    @PostMapping(value = "/test",produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/token",produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> postTest(HttpServletResponse response) throws IOException {
 

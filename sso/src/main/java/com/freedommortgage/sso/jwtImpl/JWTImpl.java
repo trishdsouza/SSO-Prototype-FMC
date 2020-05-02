@@ -17,6 +17,8 @@ public class JWTImpl {
     private String scope1;
 
     private String scope2;
+    
+    private String token;
 
     @Autowired
     private JWTBuilder jwtBuilder;
@@ -54,11 +56,18 @@ public class JWTImpl {
     }
 
     public String concatenateScopes(){
-        return getScope1()+", "+getScope2();
+        return getScope1()+" "+getScope2();
     }
 
     public String getToken() {
-        return jwtBuilder.generateJWT();
+        try {
+        	
+			token = jwtBuilder.generateJWT();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return token;
     }
 
 }
